@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <article>
+
+        </article>
+        <input type="button" value="fetch" onclick="
+            /* fetch('1.html').then(function(response){
+                response.text().then(function(text){
+                    document.querySelector('article').innerHTML = text;
+                })
+            }) */
+            
+            fetch('99.html').then(function(res){
+                console.log('response end')
+                if(res.status == '404'){
+                    alert('not found')
+                }
+            });
+        ">
+        <!--
+            fetch('파일명') // 해당되는 파일을 요청
+            .then(res) // 응답이 있으면 실행되어야 할 동작 정의
+
+        -->
+    </body>
+</html>
