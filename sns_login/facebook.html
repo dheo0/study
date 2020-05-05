@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+             var checkLoginstatus = function(response){
+                    //statusChangeCallback(response);
+                    console.log(response)
+                    if(response.status === 'connected'){
+                        document.querySelector("#authBth").value ="logout"
+                    } else {
+                        document.querySelector("#authBth").value ="login"
+                    }
+                }
+                
+
+            window.fbAsyncInit = function() {
+              FB.init({
+                appId      : '574440945964968',
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v6.0'
+              });
+                
+                FB.AppEvents.logPageView(); 
+
+                // 로그인 여부 체크  
+                // FB.getLoginStatus(function(response) {
+                //     statusChangeCallback(response);
+                // });
+               
+                FB.getLoginStatus(checkLoginstatus);
+            
+
+                
+            };
+          
+            (function(d, s, id){
+               var js, fjs = d.getElementsByTagName(s)[0];
+               if (d.getElementById(id)) {return;}
+               js = d.createElement(s); js.id = id;
+               js.src = "https://connect.facebook.net/en_US/sdk.js";
+               fjs.parentNode.insertBefore(js, fjs);
+             }(document, 'script', 'facebook-jssdk'));
+          </script>
+    </head>
+    <body>
+        <h1>facebook login</h1>
+        <input type="button" id="authBth" value="checking..." onclick="
+            if(this.value=='login'){
+                FB.login(function(res){
+                    console.log('login', res)
+                    checkLoginstatus(res);
+                })
+            } else {
+                FB.logout(function(res){    
+                    console.log('logout', res)
+                    checkLoginstatus(res);
+                })
+            }
+        ">
+    </body>
+</html>

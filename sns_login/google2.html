@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>google web login</title>
+        <script>
+            function loginStatus(){
+                var loginBtn = document.querySelector("#loginBtn");
+                var userName = document.querySelector("#userName")
+                    if(gauth.isSignedIn.get()){
+                        console.log("logined")
+                        loginBtn.value = 'Logout'
+                        var profile = gauth.currentUser.get().getBasicProfile();
+                        console.log(profile.getName())
+                        userName.innerHTML = 'Welcome <strong>'+ profile.getName() +'</strong>'
+                    } else {
+                        console.log("logout")
+                        loginBtn.value = 'Login'
+                        userName.innerHTML = ''
+                    }
+            }
+            function init(){
+                console.log("Started");
+                gapi.load('auth2', function(){ // auth2라는 라이브러리만 로드
+                    //READY 
+                    window.gauth = gapi.auth2.init({
+                        client_id:'1049113121755-o1mu6eeetb1c8u61g5h1alo5230qgg19.apps.googleusercontent.com'
+                    })
+                    gauth.then(function(){
+                        console.log('googleAut success');
+                        loginStatus()
+                    }, function(){
+                        console.log('googleAut failed');
+                    })
+                });
+            }
+
+        
+        </script>
+    </head>
+    <body>
+        <span id="userName"></span>
+        <input type="button" id="loginBtn" value="checking..." onclick="
+            if(this.value ==='Login') {
+                gauth.signIn().then(function(){
+                    loginStatus()
+                })
+            } else {
+                gauth.signOut().then(function(){
+                    loginStatus()
+                })
+            }
+        ">
+        <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    </body>
+</html>
